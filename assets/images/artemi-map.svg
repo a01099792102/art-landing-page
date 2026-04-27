@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="782" height="544" viewBox="0 0 782 544" role="img" aria-labelledby="title desc">
+  <title id="title">아르테미 갤러리카페 위치 지도</title>
+  <desc id="desc">아르테미 갤러리카페 위치를 표시한 지도 이미지</desc>
+  <rect width="782" height="544" fill="#f7f7f5"/>
+  <g opacity=".62" fill="none" stroke="#deded9" stroke-width="4">
+    <path d="M-20 82 142 48 310 30 501 6 822 0"/>
+    <path d="M-12 358 140 340 306 316 462 298 810 248"/>
+    <path d="M10 520 192 466 396 428 600 390 816 342"/>
+    <path d="M102 -20 126 94 144 224 160 354 184 564"/>
+    <path d="M534 -30 514 122 490 266 466 420 450 570"/>
+    <path d="M690 -20 642 122 604 264 562 406 532 572"/>
+    <path d="M-12 210 180 176 386 146 592 102 814 62"/>
+  </g>
+  <g opacity=".34" fill="#ffffff" stroke="#d9d9d5" stroke-width="3">
+    <path d="M188 56 288 44 300 136 204 150z"/>
+    <path d="M316 38 442 22 456 126 334 142z"/>
+    <path d="M198 172 342 154 360 286 216 302z"/>
+    <path d="M384 154 528 136 502 290 400 304z"/>
+    <path d="M548 122 704 86 674 232 522 262z"/>
+    <path d="M72 250 188 224 206 346 90 364z"/>
+    <path d="M238 326 388 306 406 452 258 478z"/>
+    <path d="M438 326 566 302 534 454 414 478z"/>
+    <path d="M592 286 748 248 716 410 566 452z"/>
+  </g>
+  <g font-family="Pretendard, Noto Sans KR, Arial, sans-serif" font-weight="700">
+    <text x="38" y="126" font-size="27" fill="#c98b54">그린브라우니</text>
+    <text x="642" y="126" font-size="26" fill="#c98b54">신화동나리</text>
+    <text x="642" y="160" font-size="26" fill="#c98b54">해장국</text>
+    <text x="588" y="338" font-size="27" fill="#c98b54">까운</text>
+    <text x="686" y="386" font-size="26" fill="#c98b54">해미의방</text>
+    <text x="20" y="56" font-size="32" fill="#b5b5b0">오행석화동</text>
+  </g>
+  <g>
+    <rect x="96" y="60" width="28" height="28" rx="6" fill="#5ab0ff"/>
+    <rect x="102" y="66" width="16" height="16" rx="2" fill="none" stroke="#fff" stroke-width="3"/>
+    <rect x="178" y="72" width="28" height="28" rx="6" fill="#5ab0ff"/>
+    <rect x="184" y="78" width="16" height="16" rx="2" fill="none" stroke="#fff" stroke-width="3"/>
+    <rect x="20" y="416" width="28" height="28" rx="6" fill="#5ab0ff"/>
+    <rect x="26" y="422" width="16" height="16" rx="2" fill="none" stroke="#fff" stroke-width="3"/>
+    <circle cx="574" cy="486" r="18" fill="#9fa3aa"/>
+    <text x="563" y="494" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#fff">H</text>
+    <circle cx="574" cy="344" r="18" fill="#87a2d8"/>
+    <text x="568" y="352" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#fff">P</text>
+    <circle cx="594" cy="238" r="18" fill="#de8b60"/>
+    <text x="587" y="246" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#fff">M</text>
+    <circle cx="568" cy="356" r="18" fill="#dc7f49"/>
+    <text x="561" y="364" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#fff">🍴</text>
+    <circle cx="710" cy="376" r="18" fill="#dc7f49"/>
+    <text x="703" y="384" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#fff">🍴</text>
+  </g>
+  <g transform="translate(344 180)">
+    <path d="M54 0C24 0 0 24 0 54c0 42 54 102 54 102s54-60 54-102C108 24 84 0 54 0z" fill="#ef6048"/>
+    <circle cx="54" cy="54" r="26" fill="#fff"/>
+    <path d="M44 42h25c8 0 14 6 14 14s-6 14-14 14H44z" fill="#ef6048"/>
+    <rect x="40" y="42" width="28" height="42" rx="3" fill="#ef6048"/>
+    <rect x="45" y="47" width="18" height="24" rx="2" fill="#fff"/>
+  </g>
+  <text x="270" y="421" font-family="Pretendard, Noto Sans KR, Arial, sans-serif" font-size="32" font-weight="900" fill="#111">아르테미 갤러리카페</text>
+</svg>
