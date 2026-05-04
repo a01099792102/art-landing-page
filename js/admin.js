@@ -8,6 +8,8 @@ const ADMIN_ANALYTICS = {
   namespace: "art-landing-page-nine.vercel.app",
   timezone: "Asia/Seoul"
 };
+let fallbackPassword = ADMIN_DEFAULT_PASSWORD;
+let inMemorySession = false;
 
 const loginPanel = document.querySelector("[data-login-panel]");
 const dashboard = document.querySelector("[data-dashboard]");
@@ -26,8 +28,11 @@ bindAdminEvents();
 restoreAdminSession();
 
 function initializeAdminPassword() {
-  if (!localStorage.getItem(ADMIN_STORAGE_KEYS.password)) {
-    localStorage.setItem(ADMIN_STORAGE_KEYS.password, ADMIN_DEFAULT_PASSWORD);
+  const storedPassword = safeLocalStorageGet(ADMIN_STORAGE_KEYS.password);
+  if (!storedPassword) {
+    safeLocalStorageSet(ADMIN_STORAGE_KEYS.password, ADMIN_DEFAULT_PASSWORD);
+  } else {
+    fallbackPassword = storedPassword;
   }
 }
 
@@ -44,14 +49,17 @@ function bindAdminEvents() {
       return;
     }
 
-    sessionStorage.setItem(ADMIN_STORAGE_KEYS.session, "true");
+    safeSessionStorageSet(ADMIN_STORAGE_KEYS.session, "true");
+    inMemorySession = true;
     loginForm.reset();
     await openDashboard();
   });
 
   resetButton?.addEventListener("click", () => {
-    localStorage.setItem(ADMIN_STORAGE_KEYS.password, ADMIN_DEFAULT_PASSWORD);
-    sessionStorage.removeItem(ADMIN_STORAGE_KEYS.session);
+    fallbackPassword = ADMIN_DEFAULT_PASSWORD;
+    safeLocalStorageSet(ADMIN_STORAGE_KEYS.password, ADMIN_DEFAULT_PASSWORD);
+    safeSessionStorageRemove(ADMIN_STORAGE_KEYS.session);
+    inMemorySession = false;
     loginForm?.reset();
     setMessage(loginMessage, "이 브라우저의 관리자 비밀번호를 1234로 초기화했습니다.", true);
   });
@@ -80,13 +88,15 @@ function bindAdminEvents() {
       return;
     }
 
-    localStorage.setItem(ADMIN_STORAGE_KEYS.password, newPassword);
+    fallbackPassword = newPassword;
+    safeLocalStorageSet(ADMIN_STORAGE_KEYS.password, newPassword);
     passwordForm.reset();
     setMessage(passwordMessage, "비밀번호가 변경되었습니다.", true);
   });
 
   logoutButton?.addEventListener("click", () => {
-    sessionStorage.removeItem(ADMIN_STORAGE_KEYS.session);
+    safeSessionStorageRemove(ADMIN_STORAGE_KEYS.session);
+    inMemorySession = false;
     dashboard.hidden = true;
     loginPanel.hidden = false;
     clearMessage(loginMessage);
@@ -99,7 +109,7 @@ function bindAdminEvents() {
 }
 
 function restoreAdminSession() {
-  if (sessionStorage.getItem(ADMIN_STORAGE_KEYS.session) === "true") {
+  if (safeSessionStorageGet(ADMIN_STORAGE_KEYS.session) === "true" || inMemorySession) {
     openDashboard();
   }
 }
@@ -183,7 +193,7 @@ function renderChart(data) {
 }
 
 function getStoredPassword() {
-  return localStorage.getItem(ADMIN_STORAGE_KEYS.password) || ADMIN_DEFAULT_PASSWORD;
+  return safeLocalStorageGet(ADMIN_STORAGE_KEYS.password) || fallbackPassword || ADMIN_DEFAULT_PASSWORD;
 }
 
 function isValidAdminPassword(password) {
@@ -251,4 +261,44 @@ async function getCounterValue(key) {
 
   const payload = await response.json();
   return Number(payload.value || 0);
+}
+
+function safeLocalStorageGet(key) {
+  try {
+    return window.localStorage.getItem(key);
+  } catch (error) {
+    return null;
+  }
+}
+
+function safeLocalStorageSet(key, value) {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch (error) {
+    fallbackPassword = value;
+  }
+}
+
+function safeSessionStorageGet(key) {
+  try {
+    return window.sessionStorage.getItem(key);
+  } catch (error) {
+    return null;
+  }
+}
+
+function safeSessionStorageSet(key, value) {
+  try {
+    window.sessionStorage.setItem(key, value);
+  } catch (error) {
+    inMemorySession = value === "true";
+  }
+}
+
+function safeSessionStorageRemove(key) {
+  try {
+    window.sessionStorage.removeItem(key);
+  } catch (error) {
+    inMemorySession = false;
+  }
 }
