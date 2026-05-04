@@ -26,7 +26,7 @@ function createVisitorApplicationForm() {
 
   form.addDateItem()
     .setTitle("방문 희망일")
-    .setHelpText("2026년 5월 30일 ~ 2026년 6월 5일 중 선택해 주세요.")
+    .setHelpText("2026년 6월 4일 ~ 2026년 6월 13일 중 선택해 주세요.")
     .setRequired(true);
 
   form.addMultipleChoiceItem()
@@ -86,7 +86,7 @@ function getVisitorFormConfig_() {
     title: "제1회 ART 전시회 관람 신청",
     description: [
       "제1회 ART 전시회 관람 신청 폼입니다.",
-      "전시 기간: 2026.05.30 - 2026.06.05",
+      "전시 기간: 2026.06.04 - 2026.06.13",
       "장소: 대전 아르테미 갤러리",
       "원활한 관람 안내를 위해 아래 항목을 작성해 주세요."
     ].join("\n"),
