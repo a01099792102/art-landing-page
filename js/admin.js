@@ -8,12 +8,14 @@ const ADMIN_ANALYTICS = {
   namespace: "art-landing-page-nine.vercel.app",
   timezone: "Asia/Seoul"
 };
+
 let fallbackPassword = ADMIN_DEFAULT_PASSWORD;
 let inMemorySession = false;
 
 const loginPanel = document.querySelector("[data-login-panel]");
 const dashboard = document.querySelector("[data-dashboard]");
 const loginForm = document.querySelector("[data-login-form]");
+const loginInput = loginForm?.querySelector('input[name="password"]');
 const loginMessage = document.querySelector("[data-login-message]");
 const resetButton = document.querySelector("[data-reset-button]");
 const passwordForm = document.querySelector("[data-password-form]");
@@ -23,36 +25,36 @@ const refreshButton = document.querySelector("[data-refresh-button]");
 const chartElement = document.querySelector("[data-chart]");
 const chartEmpty = document.querySelector("[data-chart-empty]");
 
-initializeAdminPassword();
-bindAdminEvents();
-restoreAdminSession();
+bootstrapAdmin();
+
+function bootstrapAdmin() {
+  initializeAdminPassword();
+  bindAdminEvents();
+  restoreAdminSession();
+}
 
 function initializeAdminPassword() {
   const storedPassword = safeLocalStorageGet(ADMIN_STORAGE_KEYS.password);
-  if (!storedPassword) {
-    safeLocalStorageSet(ADMIN_STORAGE_KEYS.password, ADMIN_DEFAULT_PASSWORD);
-  } else {
+  if (storedPassword) {
     fallbackPassword = storedPassword;
+    return;
   }
+
+  safeLocalStorageSet(ADMIN_STORAGE_KEYS.password, ADMIN_DEFAULT_PASSWORD);
+  fallbackPassword = ADMIN_DEFAULT_PASSWORD;
 }
 
 function bindAdminEvents() {
-  loginForm?.addEventListener("submit", async (event) => {
+  loginForm?.addEventListener("submit", (event) => {
     event.preventDefault();
-    clearMessage(loginMessage);
+    handleLogin();
+  });
 
-    const formData = new FormData(loginForm);
-    const password = String(formData.get("password") || "").trim();
-
-    if (!isValidAdminPassword(password)) {
-      setMessage(loginMessage, "비밀번호가 올바르지 않습니다.");
-      return;
+  loginInput?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleLogin();
     }
-
-    safeSessionStorageSet(ADMIN_STORAGE_KEYS.session, "true");
-    inMemorySession = true;
-    loginForm.reset();
-    await openDashboard();
   });
 
   resetButton?.addEventListener("click", () => {
@@ -62,6 +64,7 @@ function bindAdminEvents() {
     inMemorySession = false;
     loginForm?.reset();
     setMessage(loginMessage, "이 브라우저의 관리자 비밀번호를 1234로 초기화했습니다.", true);
+    loginInput?.focus();
   });
 
   passwordForm?.addEventListener("submit", (event) => {
@@ -97,27 +100,59 @@ function bindAdminEvents() {
   logoutButton?.addEventListener("click", () => {
     safeSessionStorageRemove(ADMIN_STORAGE_KEYS.session);
     inMemorySession = false;
-    dashboard.hidden = true;
-    loginPanel.hidden = false;
-    clearMessage(loginMessage);
-    clearMessage(passwordMessage);
+    showLoginPanel();
   });
 
-  refreshButton?.addEventListener("click", async () => {
-    await loadDashboardData();
+  refreshButton?.addEventListener("click", () => {
+    loadDashboardData();
   });
+}
+
+function handleLogin() {
+  clearMessage(loginMessage);
+  const password = String(loginInput?.value || "").trim();
+
+  if (!isValidAdminPassword(password)) {
+    setMessage(loginMessage, "비밀번호가 올바르지 않습니다.");
+    return;
+  }
+
+  safeSessionStorageSet(ADMIN_STORAGE_KEYS.session, "true");
+  inMemorySession = true;
+  loginForm?.reset();
+  showDashboard();
+  loadDashboardData();
 }
 
 function restoreAdminSession() {
   if (safeSessionStorageGet(ADMIN_STORAGE_KEYS.session) === "true" || inMemorySession) {
-    openDashboard();
+    showDashboard();
+    loadDashboardData();
+    return;
   }
+
+  showLoginPanel();
 }
 
-async function openDashboard() {
-  loginPanel.hidden = true;
-  dashboard.hidden = false;
-  await loadDashboardData();
+function showDashboard() {
+  if (loginPanel) {
+    loginPanel.hidden = true;
+  }
+  if (dashboard) {
+    dashboard.hidden = false;
+  }
+  clearMessage(loginMessage);
+}
+
+function showLoginPanel() {
+  if (dashboard) {
+    dashboard.hidden = true;
+  }
+  if (loginPanel) {
+    loginPanel.hidden = false;
+  }
+  clearMessage(passwordMessage);
+  loginInput?.focus();
 }
 
 async function loadDashboardData() {
@@ -144,7 +179,12 @@ async function loadDashboardData() {
     renderChart(chartData);
   } catch (error) {
     console.error("Failed to load dashboard analytics.", error);
-    setMessage(passwordMessage, "접속 통계를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
+    setStatValue("pageviewsTotal", 0);
+    setStatValue("visitorsTotal", 0);
+    setStatValue("todayVisitors", 0);
+    setStatValue("last7Visitors", 0);
+    renderChart([]);
+    setMessage(passwordMessage, "통계 데이터를 불러오지 못했습니다. 로그인은 되었지만 수치는 잠시 후 다시 시도해 주세요.");
   }
 }
 
@@ -156,6 +196,10 @@ function setStatValue(name, value) {
 }
 
 function renderChart(data) {
+  if (!chartElement || !chartEmpty) {
+    return;
+  }
+
   chartElement.innerHTML = "";
   const maxValue = Math.max(...data.map((item) => item.value), 0);
   const hasData = maxValue > 0;
@@ -180,7 +224,7 @@ function renderChart(data) {
     const bar = document.createElement("div");
     bar.className = "chart-bar";
     bar.style.height = `${Math.max((item.value / maxValue) * 100, 6)}%`;
-    bar.title = `${item.dateKey}: ${item.value}명`;
+    bar.title = `${item.dateKey}: ${item.value}`;
     barWrap.append(bar);
 
     const label = document.createElement("div");
@@ -226,7 +270,6 @@ function getRecentDateKeys(days) {
     month: "2-digit",
     day: "2-digit"
   });
-
   const now = new Date();
 
   for (let offset = days - 1; offset >= 0; offset -= 1) {
@@ -239,7 +282,7 @@ function getRecentDateKeys(days) {
 }
 
 function formatShortDateLabel(dateKey) {
-  const [year, month, day] = dateKey.split("-");
+  const [, month, day] = dateKey.split("-");
   return `${month}.${day}`;
 }
 
