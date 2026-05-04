@@ -37,9 +37,9 @@ function bindAdminEvents() {
     clearMessage(loginMessage);
 
     const formData = new FormData(loginForm);
-    const password = String(formData.get("password") || "");
+    const password = String(formData.get("password") || "").trim();
 
-    if (password !== getStoredPassword()) {
+    if (!isValidAdminPassword(password)) {
       setMessage(loginMessage, "비밀번호가 올바르지 않습니다.");
       return;
     }
@@ -61,11 +61,11 @@ function bindAdminEvents() {
     clearMessage(passwordMessage);
 
     const formData = new FormData(passwordForm);
-    const currentPassword = String(formData.get("currentPassword") || "");
-    const newPassword = String(formData.get("newPassword") || "");
-    const confirmPassword = String(formData.get("confirmPassword") || "");
+    const currentPassword = String(formData.get("currentPassword") || "").trim();
+    const newPassword = String(formData.get("newPassword") || "").trim();
+    const confirmPassword = String(formData.get("confirmPassword") || "").trim();
 
-    if (currentPassword !== getStoredPassword()) {
+    if (!isValidAdminPassword(currentPassword)) {
       setMessage(passwordMessage, "현재 비밀번호가 맞지 않습니다.");
       return;
     }
@@ -184,6 +184,10 @@ function renderChart(data) {
 
 function getStoredPassword() {
   return localStorage.getItem(ADMIN_STORAGE_KEYS.password) || ADMIN_DEFAULT_PASSWORD;
+}
+
+function isValidAdminPassword(password) {
+  return password === ADMIN_DEFAULT_PASSWORD || password === getStoredPassword();
 }
 
 function setMessage(target, text, isSuccess = false) {
