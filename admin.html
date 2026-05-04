@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>제1회 ART 전시회 관리자</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body data-analytics="private">
+  <main class="admin-shell">
+    <section class="login-panel" data-login-panel>
+      <div class="panel-card narrow-card">
+        <p class="eyebrow">Admin Access</p>
+        <h1>관리자 페이지</h1>
+        <p class="panel-copy">기본 비밀번호는 <strong>1234</strong>입니다. 로그인 후 관리자 페이지 안에서 비밀번호를 바꿀 수 있습니다.</p>
+        <form class="stack-form" data-login-form>
+          <label class="field">
+            <span>비밀번호</span>
+            <input type="password" name="password" autocomplete="current-password" required>
+          </label>
+          <button class="primary-button" type="submit">로그인</button>
+        </form>
+        <p class="message" data-login-message aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="dashboard" data-dashboard hidden>
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Admin Dashboard</p>
+          <h1>접속자 현황</h1>
+          <p class="panel-copy">방문 집계는 공개 페이지 접속 기준으로 수집됩니다. 관리자 페이지 비밀번호는 이 화면에서 변경할 수 있습니다.</p>
+        </div>
+        <div class="header-actions">
+          <a class="secondary-button" href="./index.html" target="_blank" rel="noopener">사이트 열기</a>
+          <button class="ghost-button" type="button" data-logout-button>로그아웃</button>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+        <article class="panel-card">
+          <p class="stat-label">누적 페이지뷰</p>
+          <p class="stat-value" data-stat="pageviewsTotal">-</p>
+          <p class="stat-help">공개 페이지가 로드된 총 횟수</p>
+        </article>
+        <article class="panel-card">
+          <p class="stat-label">누적 방문자</p>
+          <p class="stat-value" data-stat="visitorsTotal">-</p>
+          <p class="stat-help">브라우저 기준 누적 방문 수</p>
+        </article>
+        <article class="panel-card">
+          <p class="stat-label">오늘 방문자</p>
+          <p class="stat-value" data-stat="todayVisitors">-</p>
+          <p class="stat-help">한국 시간 기준 오늘 방문자</p>
+        </article>
+        <article class="panel-card">
+          <p class="stat-label">최근 7일 합계</p>
+          <p class="stat-value" data-stat="last7Visitors">-</p>
+          <p class="stat-help">최근 7일 방문자 총합</p>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel-card">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Visitors</p>
+              <h2>최근 7일 방문자 그래프</h2>
+            </div>
+            <button class="ghost-button" type="button" data-refresh-button>새로고침</button>
+          </div>
+          <div class="chart" data-chart></div>
+          <p class="chart-empty" data-chart-empty hidden>표시할 방문 데이터가 아직 없습니다.</p>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Settings</p>
+              <h2>관리자 비밀번호 변경</h2>
+            </div>
+          </div>
+          <form class="stack-form" data-password-form>
+            <label class="field">
+              <span>현재 비밀번호</span>
+              <input type="password" name="currentPassword" autocomplete="current-password" required>
+            </label>
+            <label class="field">
+              <span>새 비밀번호</span>
+              <input type="password" name="newPassword" minlength="4" required>
+            </label>
+            <label class="field">
+              <span>새 비밀번호 확인</span>
+              <input type="password" name="confirmPassword" minlength="4" required>
+            </label>
+            <button class="primary-button" type="submit">비밀번호 저장</button>
+          </form>
+          <p class="message" data-password-message aria-live="polite"></p>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script src="./js/admin.js"></script>
+</body>
+</html>
