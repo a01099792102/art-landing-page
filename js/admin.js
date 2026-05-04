@@ -13,6 +13,7 @@ const loginPanel = document.querySelector("[data-login-panel]");
 const dashboard = document.querySelector("[data-dashboard]");
 const loginForm = document.querySelector("[data-login-form]");
 const loginMessage = document.querySelector("[data-login-message]");
+const resetButton = document.querySelector("[data-reset-button]");
 const passwordForm = document.querySelector("[data-password-form]");
 const passwordMessage = document.querySelector("[data-password-message]");
 const logoutButton = document.querySelector("[data-logout-button]");
@@ -46,6 +47,13 @@ function bindAdminEvents() {
     sessionStorage.setItem(ADMIN_STORAGE_KEYS.session, "true");
     loginForm.reset();
     await openDashboard();
+  });
+
+  resetButton?.addEventListener("click", () => {
+    localStorage.setItem(ADMIN_STORAGE_KEYS.password, ADMIN_DEFAULT_PASSWORD);
+    sessionStorage.removeItem(ADMIN_STORAGE_KEYS.session);
+    loginForm?.reset();
+    setMessage(loginMessage, "이 브라우저의 관리자 비밀번호를 1234로 초기화했습니다.", true);
   });
 
   passwordForm?.addEventListener("submit", (event) => {
