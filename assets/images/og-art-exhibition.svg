@@ -1,0 +1,30 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#080B10"/>
+  <rect x="28" y="28" width="1144" height="574" rx="36" fill="url(#panel)" stroke="rgba(255,255,255,0.12)"/>
+  <circle cx="946" cy="150" r="110" fill="url(#glowOne)"/>
+  <circle cx="1040" cy="258" r="72" fill="url(#glowTwo)"/>
+  <circle cx="873" cy="287" r="48" fill="#F6D860" fill-opacity="0.9"/>
+  <path d="M758 434C805 324 915 249 1042 249C1083 249 1122 257 1156 271C1123 381 1021 460 901 460C819 460 747 423 708 361" stroke="#F5F1E8" stroke-width="26" stroke-linecap="round"/>
+  <path d="M790 500H1044" stroke="#1DD3B0" stroke-width="18" stroke-linecap="round"/>
+  <text x="92" y="150" fill="#1DD3B0" font-family="Pretendard, Noto Sans KR, sans-serif" font-size="34" font-weight="800" letter-spacing="3">ART EXHIBITION</text>
+  <text x="92" y="258" fill="#F5F1E8" font-family="Pretendard, Noto Sans KR, sans-serif" font-size="92" font-weight="800">제1회 ART 전시회</text>
+  <text x="92" y="340" fill="#D6D1C7" font-family="Pretendard, Noto Sans KR, sans-serif" font-size="38" font-weight="500">상상이 이미지가 되고, 이미지가 공간이 되는 순간</text>
+  <text x="92" y="432" fill="#F5F1E8" font-family="Pretendard, Noto Sans KR, sans-serif" font-size="48" font-weight="700">2026.06.04 - 06.13</text>
+  <text x="92" y="490" fill="#A8B1C0" font-family="Pretendard, Noto Sans KR, sans-serif" font-size="30" font-weight="500">대전 아르테미 갤러리</text>
+  <text x="92" y="548" fill="#A8B1C0" font-family="Pretendard, Noto Sans KR, sans-serif" font-size="28" font-weight="500">30명 이상의 작가가 함께 만드는 감각적인 단체 전시</text>
+  <defs>
+    <linearGradient id="panel" x1="82" y1="58" x2="1120" y2="574" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#101724"/>
+      <stop offset="0.55" stop-color="#141D2B"/>
+      <stop offset="1" stop-color="#231726"/>
+    </linearGradient>
+    <radialGradient id="glowOne" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(946 150) rotate(90) scale(110)">
+      <stop stop-color="#FFB47B"/>
+      <stop offset="1" stop-color="#FF6B6B"/>
+    </radialGradient>
+    <radialGradient id="glowTwo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1040 258) rotate(90) scale(72)">
+      <stop stop-color="#31E1C4"/>
+      <stop offset="1" stop-color="#0D8F90"/>
+    </radialGradient>
+  </defs>
+</svg>
